@@ -47,55 +47,102 @@ $(document).ready(function() {
   ]
 	
    // questions testing
-   //console.log(questions.length); // equals 5
-   //console.log(questions[0].qNum); // equals 1
+   // console.log(questions.length); // equals 5
+   // console.log(questions[0].qNum); // equals 1
    // console.log(questions[0].qText) // equals "How many of Jane Austen's books were published in her lifetime?"
    // console.log(typeof questions); // equals object
   
 
   // Create radio buttons
-  // Test input
-  // console.log('<input name="' + questions[currentQuestion].qName + '" ' + 'type="radio" value="' + questions[currentQuestion].qChoices[0] + '">' + questions[currentQuestion].qChoices[0] + '<br>');
-  // Test the number of questions in array
-  //console.log(questions[currentQuestion].qChoices.length);
+  // test input
+    // console.log('<input name="' + questions[currentQuestion].qName + '" ' + 'type="radio" value="' + questions[currentQuestion].qChoices[0] + '">' + questions[currentQuestion].qChoices[0] + '<br>');
+  // test the number of questions in array
+    //console.log(questions[currentQuestion].qChoices.length);
+  
+  var radio = [];
 
   for (var counter = 0; counter < questions[currentQuestion].qChoices.length; counter++) {
-    var radio = '<input name="' + questions[currentQuestion].qName + '" ' + 'type="radio" value="' + questions[currentQuestion].qChoices[counter] + '">' + questions[currentQuestion].qChoices[counter] + '<br>' ;
-  	// ? Want this to go into an array but it's not working
+    createInputTag(currentQuestion);
+    radio.push(createInputTag(currentQuestion));
   	//console.log(radio);
   };
 
+
+  function createInputTag(currentQuestion) {
+    var thisAnswer = '<input name="' + questions[currentQuestion].qName + '" ' + 'type="radio" value="' + questions[currentQuestion].qChoices[counter] + '">' + questions[currentQuestion].qChoices[counter] + '<br>';
+    return thisAnswer;
+  }
   
- // Show question
+ // show question
 function showQuestion() {
   // add question number to .questionNum
-  $(".questionNum").append("<p>" + "Question " + questions[currentQuestion].qNum + " of " + questions.length + "<p>");
+  $(".questionNum").append("<p>" + "Question " + questions[currentQuestion].qNum + " of " + questions.length + "</p>");
   // show question text within .questions
   $(".question").append(questions[currentQuestion].qText);
   // add radio buttons to .options 
   $(".options").append(radio);
   // add submit button
-  $(".options").append('<input type="submit" value="Submit">');
+  $(".options").append('<input name="submit" type="submit" value="Submit">');
 }
 
 showQuestion();
 
-// When user clicks submit, check for correct answer
-   // Get the value of the checked radio button:
-   // $("input[name=radioName]:checked").val();
+function gradeQuestion() {
+  // get the value of the checked radio button:
+  var answerValue = $("input[type='radio']:checked").val();
+  // test value of checked button - comes back as undefined.
+    // console.log(answerValue);
+  // hide previous question number
+  $(".questionNum").empty();
+  // hide question text within .questions
+  $(".question").empty();
+  // hide radio buttons 
+  $(".options").empty();
+  // hide submit button
+  $(".options").empty();
+  // compare selected option to answer
+  // test value of current question answer
+    // console.log(questions[currentQuestion].qAnswer);
+  if (answerValue == questions[currentQuestion].qAnswer) {
+  	// display "correct" message
+    $(".question").append("<p>" + "Correct!" + "</p>");
+    // add to the score
+    score++;
+    // test score
+      // console.log(score);
+  } 
+  else {
+  	// display "incorrect" message
+  	$(".question").append("<p>" + "Sorry, that is incorrect." + "</p>");
+  }
+  // display explanation of correct answer
+  $(".question").append(questions[currentQuestion].qDescription);
+  // display next question button
+  $(".options").append('<input name="next" type="submit" value="Next Question">');   
+}
 
-// Display if the answer was correct or incorrect
 
-// Add to the score if the answer was correct
-  // score++
+// When user clicks submit, grade the question
+$("input[name='submit']").click(function() {
+  // prevent form from submitting
+  event.preventDefault(); 
+  // grade question
+  gradeQuestion();
+});
 
-// Display explanation of correct answer
 
-// Display "Next Question button"
+// When user clicks "Next Question", show next question
+$("input[name='next']").click(function() {
+  // update currentQuestion to next question
+  currentQuestion++; // ?? Why is this not working?
+  //show question
+  showQuestion();
+});
 
-// When user clicks "Next Question" show next question
 
 // After question 5 is answered, show overall score (show score variable)
+    
+// Need to prevent from being able to submit without an answer
     
 }); // end document ready
 
