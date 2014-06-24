@@ -51,7 +51,6 @@ function createInputTag(currentQuestion) {
   var thisAnswer = '<input name="' + questions[currentQuestion].qName + '" ' + 'type="radio" value="' + questions[currentQuestion].qChoices[counter] + '">' + questions[currentQuestion].qChoices[counter] + '<br>';
   return thisAnswer;
 }
-// show question
 
 function showQuestion() {
   var radio = [];
@@ -109,13 +108,18 @@ function gradeQuestion() {
     $(".options").append('<input name="next" type="submit" value="Next Question">');
   }
 }
+
+
 $(document).ready(function() {
+  
   showQuestion();
+
   // When user clicks submit, grade the question
   $("input[name='submit']").click(function() {
     //alert("I'm grading the test!");
     gradeQuestion();
   });
+
   // When user clicks "Next Question", show next question
   $("input[name='next']").click(function() {
     alert("I clicked on next");
@@ -124,10 +128,13 @@ $(document).ready(function() {
     //show question
     showQuestion();
   });
+
   // Prevent form from refreshing page
   $("form").submit(function(e) {
     e.preventDefault();
   });
+  
   // If "show score" button is clicked, show overall score (show score variable)
   // Need to prevent from being able to submit without an answer
+
 }); // end document ready
