@@ -65,7 +65,7 @@ $(document).ready(function() {
     createInputTag(currentQuestion);
     radio.push(createInputTag(currentQuestion));
   	//console.log(radio);
-  };
+  }
 
 
   function createInputTag(currentQuestion) {
@@ -117,30 +117,39 @@ function gradeQuestion() {
   }
   // display explanation of correct answer
   $(".question").append(questions[currentQuestion].qDescription);
-  // display next question button
+  // display next question button or score button
+  if (questions[currentQuestion].qNum == 5) {
+  	$(".options").append('<input name="score" type="submit" value="Show Score">');
+  }
+  else {
   $(".options").append('<input name="next" type="submit" value="Next Question">');   
+  }
 }
 
 
 // When user clicks submit, grade the question
 $("input[name='submit']").click(function() {
-  // prevent form from submitting
-  event.preventDefault(); 
-  // grade question
+  //alert("I'm grading the test!");
   gradeQuestion();
 });
 
 
 // When user clicks "Next Question", show next question
 $("input[name='next']").click(function() {
+  alert("I clicked on 'next'");
   // update currentQuestion to next question
-  currentQuestion++; // ?? Why is this not working?
+  currentQuestion++;
   //show question
   showQuestion();
 });
 
+// Prevent form from refreshing page
+$("form").submit(function(e) {
+  e.preventDefault();
+});
 
-// After question 5 is answered, show overall score (show score variable)
+
+// If "show score" button is clicked, show overall score (show score variable)
     
 // Need to prevent from being able to submit without an answer
     
