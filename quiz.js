@@ -132,9 +132,9 @@ $(document).ready(function() {
   $(document).on("click", "input[name='next']", function() {
     // update currentQuestion to next question
     currentQuestion++;
-    // update question variable
+    // update question variable - ?? why did this not update with the global variable? why does it need to be local?
     question = questions[currentQuestion];
-    // update currentText variable
+    // update currentText variable - ?? why did this not update with the global variable? why does it need to be local?
     currentText = question.text;
     // hide previous question 
     clearPrevious();
